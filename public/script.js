@@ -35,7 +35,7 @@
 //element for the city name and paragraphs for temp, condition and percipitation. 
                         weatherContainer.appendChild(cityElement);
                     } else {
-                        alert('City not in database.');
+                        alert('City does not exist');
                     }
                 })
                 .catch(error => {
