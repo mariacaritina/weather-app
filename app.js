@@ -42,14 +42,8 @@ app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, "/public/index.html"));
 });
 
-app.get('/weather/:city', (req, res) => {
-    const city = req.params.city;
-    const cityWeather = weather.find(item => item.city.toLowerCase() === city.toLowerCase());
-    if (cityWeather) {
-        res.json(cityWeather);
-    } else {
-        res.status(404).json({ error: 'City not found' });
-    }
+app.get('/weather', (req, res) => {
+    res.json(weather);
 });
 
 app.listen(3000, () => {
