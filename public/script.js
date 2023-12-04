@@ -1,29 +1,30 @@
 //need the site to go out and get the data. Done through a fetch
 //we're calling our own server/endpoint 
-function getWeather() {
-    const cityInput = document.getElementById('cityInput');
-    const cityName = cityInput.value.toLowerCase();
-
-    fetch(/weather/${cityName})
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('City not found');
-            }
-            return response.json();
-        })
-        .then(data => {
-            displayWeather(data);
-        })
-        .catch(error => {
-            console.error(error);
-            document.getElementById('weatherInfo').innerText = 'City not found';
-        });
-}
-
-function displayWeather(weatherData) {
-    const weatherInfo = document.getElementById('weatherInfo');
-    weatherInfo.innerHTML = `<h2>${weatherData.city}</h2>
-                            <p>Temperature: ${weatherData.temp}°F</p>
-                            <p>Condition: ${weatherData.condition}</p>
-                            <p>Precipitation: ${weatherData.precipitation}</p>`;
-}
+        // Fetch weather data from the server
+        function getWeather() {
+            const city = document.getElementById('cityInput').value;
+            fetch(/weather/${city})
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('City not found');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    const weatherContainer = document.getElementById('weather-container');
+                    weatherContainer.innerHTML = '';
+                    const cityElement = document.createElement('div');
+                    cityElement.innerHTML = `
+                        <h2>${data.city}</h2>
+                        <p>Temperature: ${data.temp}°F</p>
+                        <p>Condition: ${data.condition}</p>
+                        <p>Precipitation: ${data.precipitation}</p>
+                        <hr>
+                    `;
+                    weatherContainer.appendChild(cityElement);
+                })
+                .catch(error => {
+                    console.error('Error fetching weather data:', error);
+                    alert('City not found. Please try again.');
+                });
+        }
