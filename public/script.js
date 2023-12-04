@@ -18,9 +18,12 @@
                   const cityWeather = data.find(item => item.city.toLowerCase() === city.toLowerCase());
 //Finds the weather information for the specified city within the data  
                     if (cityWeather) {
+//see that the weather information was found in the data
                         const weatherContainer = document.getElementById('weather-container');
                         weatherContainer.innerHTML = '';
+//sets the content of the 'weather container' to an empty string
                         const cityElement = document.createElement('div');
+//creates a new div element. Will contain the weather information for the specified city
                         cityElement.innerHTML = `
                             <h2>${cityWeather.city}</h2>
                             <p>Temperature: ${cityWeather.temp}°F</p>
@@ -28,6 +31,8 @@
                             <p>Precipitation: ${cityWeather.precipitation}</p>
                             <hr>
                         `;
+//uses a template literal to create an HTML structure for the weather information. It includes an h2
+//element for the city name and paragraphs for temp, condition and percipitation. 
                         weatherContainer.appendChild(cityElement);
                     } else {
                         alert('City not in database.');
