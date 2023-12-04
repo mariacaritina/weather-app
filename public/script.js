@@ -2,18 +2,21 @@
 //we're calling our own server/endpoint 
         // Fetch weather data from the server
         function getWeather() {
+//retrieves the value entered in the HTML with 'cityInput'
             const city = document.getElementById('cityInput').value;
             fetch('/weather')
                 .then(response => {
+//Handles the promise returned by the "fetch". Receives a response from the server
                     if (!response.ok) {
                         throw new Error('HTTP error! Status: ' + response.status);
                     }
                     return response.json();
                 })
+//if the response is successful, the code reads the response body as JSON and returns another promise with the data
                 .then(data => {
                     console.log('Weather data received:', data);
-    
-                    const cityWeather = data.find(item => item.city.toLowerCase() === city.toLowerCase());
+                  const cityWeather = data.find(item => item.city.toLowerCase() === city.toLowerCase());
+//Finds the weather information for the specified city within the data  
                     if (cityWeather) {
                         const weatherContainer = document.getElementById('weather-container');
                         weatherContainer.innerHTML = '';
@@ -27,7 +30,7 @@
                         `;
                         weatherContainer.appendChild(cityElement);
                     } else {
-                        alert('City not found. Please try again.');
+                        alert('City not in database.');
                     }
                 })
                 .catch(error => {
